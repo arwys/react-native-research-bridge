@@ -31,22 +31,11 @@ const y = [12, 14, 18, 18];
 // const time = new Date().getTime().toString();
 const App = () => {
   const [uri, setUri] = useState('');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // runCondition(uri);
   }, [uri]);
   console.log(uri);
-
-  const runCondition = uri => {
-    console.log(uri);
-    if (uri == '' || uri == null) {
-      setLoading(true);
-    } else {
-      setUri(uri);
-      setLoading(false);
-    }
-  };
 
   //Java Bridge
 
@@ -110,8 +99,20 @@ const App = () => {
     let data = null;
     try {
       data = await PythonModule.processMathplotlib(x.toString(), y.toString());
-      console.log(data);
-      runCondition(data);
+      setUri(data);
+
+      // console.log(data, 'data file');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const plot3DGraph = async () => {
+    let data = null;
+    try {
+      data = await PythonModule.plot3D();
+      setUri(data);
+
       // console.log(data, 'data file');
     } catch (error) {
       console.log(error);
@@ -143,6 +144,9 @@ const App = () => {
       <Button title="Matplotlib" onPress={generateMathplotlib} />
       <View style={{height: 80}} />
       <Button title="Process Matplotlib" onPress={processMathPlotlib} />
+
+      <View style={{height: 80}} />
+      <Button title="Plot 3D" onPress={plot3DGraph} />
       {/* <View style={{height: 80}} />
       <Button title="Invoke JSI" onPress={invokeJSI} /> */}
     </ScrollView>

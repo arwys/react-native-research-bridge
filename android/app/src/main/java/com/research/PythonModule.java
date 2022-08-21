@@ -76,11 +76,14 @@ public class PythonModule extends ReactContextBaseJavaModule {
     }
     @ReactMethod
     public void InvokePython() {
+  
+        
+
         PyObject obj = pyobj.callAttr("main", "120", "14");
-        Log.d(TAG, "InvokePython" + obj);
-        Log.d(TAG, "InvokePython: ");
+        // Log.d(TAG, "InvokePython" + obj);
+        // Log.d(TAG, "InvokePython: ");
          Toast.makeText(getReactApplicationContext(),"Invoke Python ",Toast.LENGTH_SHORT).show();
-        WritableMap data = Arguments.createMap();
+        // WritableMap data = Arguments.createMap();
     }
 
 
@@ -170,8 +173,8 @@ public class PythonModule extends ReactContextBaseJavaModule {
         Bitmap bmp = BitmapFactory.decodeByteArray(data,0,data.length); //convert to  bitmap
         //        SET IMAGE AFTER THAT
         Log.d(TAG, "generateMathplotlib: "+bmp);
-          Toast.makeText(getReactApplicationContext(),"Processing... Matplotlib to be Bitmap " + bmp,Toast.LENGTH_SHORT).show();
-       convertImageFromBitmap(bmp);
+        Toast.makeText(getReactApplicationContext(),"Processing... Matplotlib to be Bitmap " + bmp,Toast.LENGTH_SHORT).show();
+        convertImageFromBitmap(bmp);
         storageImage(bmp,"math");
         WritableMap arr = Arguments.createMap();
 //        arr.putString(bmp.toString());
@@ -187,10 +190,33 @@ public class PythonModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public void  plot3D ( Promise promise) {
+        PyObject pyScript  = py.getModule("plotGraph");
+        PyObject obj = pyScript.callAttr("main");
+        String str = obj.toString();
+        byte data[] = android.util.Base64.decode(str, Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(data,0,data.length); //convert to  bitmap
+       Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+         Toast.makeText(getReactApplicationContext(),"Processing... Matplotlib to be Bitmap and wait for the plot " + bmp,Toast.LENGTH_SHORT).show();
+        String loc = returnFile(bmp,"math"+ timestamp.getTime());
+        
+        
+        try {
+            promise.resolve(loc);
+        } catch(Exception e) {
+            promise.reject("Error due to i havent sleep", e);
+        }
+
+    }
+
+
+
+
+
+    @ReactMethod
     public void processMathplotlib (String x,String y, Promise promise) {
         PyObject pyScript  = py.getModule("matplotlibScript");
         PyObject obj = pyScript.callAttr("main", x, y);
-        //
 
         String str = obj.toString();
 
@@ -198,14 +224,11 @@ public class PythonModule extends ReactContextBaseJavaModule {
         Bitmap bmp = BitmapFactory.decodeByteArray(data,0,data.length); //convert to  bitmap
         //        SET IMAGE AFTER THAT
         Log.d(TAG, "generateMathplotlib: "+bmp);
-//        Date date = new Date();
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        String loc = returnFile(bmp,"math"+ time);
+         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
          Toast.makeText(getReactApplicationContext(),"Processing... Matplotlib to be Bitmap and wait for the plot " + bmp,Toast.LENGTH_SHORT).show();
+        String loc = returnFile(bmp,"math"+ timestamp.getTime());
         
-//        Log.d(TAG, "processMathPlotlib: loc");
-//        WritableMap arr = Arguments.createMap();
-//        arr.putString(bmp.toString());
+        
         try {
             promise.resolve(loc);
         } catch(Exception e) {

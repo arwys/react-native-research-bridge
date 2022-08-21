@@ -44,7 +44,7 @@ const App = () => {
         'Party',
         'My House',
       );
-      console.log(`Created a new event with id ${data}`);
+      // console.log(`Created a new event with id ${data}`);
     } catch (e) {
       return;
     }
@@ -80,14 +80,14 @@ const App = () => {
       console.log('first', error);
     }
   };
-  console.log(uri);
+  // console.log(uri);
 
   const generateMathplotlib = async () => {
     try {
       const data = await PythonModule.generateMathplotlib();
       // console.log(data, 'Bitmap');
     } catch (error) {
-      console.log(error);
+      return;
     }
   };
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   NativeModules,
@@ -32,11 +32,6 @@ const y = [12, 14, 18, 18];
 const App = () => {
   const [uri, setUri] = useState('');
 
-  useEffect(() => {
-    // runCondition(uri);
-  }, [uri]);
-  console.log(uri);
-
   //Java Bridge
 
   const onPress = () => {
@@ -49,9 +44,9 @@ const App = () => {
         'Party',
         'My House',
       );
-      console.log(`Created a new event with id ${data}`);
+      // console.log(`Created a new event with id ${data}`);
     } catch (e) {
-      console.log(e);
+      return;
     }
   };
 
@@ -59,9 +54,9 @@ const App = () => {
   const returnFromPython = async () => {
     try {
       const data = await PythonModule.returnFromPython('12', '16');
-      console.log(`returning  ${data}`);
+      // console.log(`returning  ${data}`);
     } catch (e) {
-      console.log(e);
+      return;
     }
   };
   const invokePython = () => {
@@ -85,18 +80,19 @@ const App = () => {
       console.log('first', error);
     }
   };
+  // console.log(uri);
 
   const generateMathplotlib = async () => {
     try {
       const data = await PythonModule.generateMathplotlib();
       // console.log(data, 'Bitmap');
     } catch (error) {
-      console.log(error);
+      return;
     }
   };
 
   const processMathPlotlib = async () => {
-    setUri(null);
+    setUri('');
     try {
       const data = await PythonModule.processMathplotlib(
         x.toString(),
@@ -111,7 +107,7 @@ const App = () => {
   };
 
   const plot3DGraph = async script => {
-    setUri(null);
+    setUri('');
     try {
       const data = await PythonModule.plot3D(script);
       setUri(data);

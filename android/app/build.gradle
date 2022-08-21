@@ -145,6 +145,7 @@ android {
                 install "matplotlib"
                 install "opencv-python"
                 install "Pillow"
+                install "mplot3d-dragger"
             }
         }
         ndk {

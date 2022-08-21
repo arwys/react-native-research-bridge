@@ -96,26 +96,30 @@ const App = () => {
   };
 
   const processMathPlotlib = async () => {
-    let data = null;
+    setUri(null);
     try {
-      data = await PythonModule.processMathplotlib(x.toString(), y.toString());
+      const data = await PythonModule.processMathplotlib(
+        x.toString(),
+        y.toString(),
+      );
       setUri(data);
 
       // console.log(data, 'data file');
     } catch (error) {
-      console.log(error);
+      return;
     }
   };
 
-  const plot3DGraph = async () => {
-    let data = null;
+  const plot3DGraph = async script => {
+    setUri(null);
     try {
-      data = await PythonModule.plot3D();
+      const data = await PythonModule.plot3D(script);
       setUri(data);
 
       // console.log(data, 'data file');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      return;
     }
   };
 
@@ -146,7 +150,12 @@ const App = () => {
       <Button title="Process Matplotlib" onPress={processMathPlotlib} />
 
       <View style={{height: 80}} />
-      <Button title="Plot 3D" onPress={plot3DGraph} />
+      <Button title="Plot 3D" onPress={() => plot3DGraph('plotGraph')} />
+      <View style={{height: 80}} />
+      <Button
+        title="Plot Contour"
+        onPress={() => plot3DGraph('displayContour')}
+      />
       {/* <View style={{height: 80}} />
       <Button title="Invoke JSI" onPress={invokeJSI} /> */}
     </ScrollView>

@@ -190,17 +190,16 @@ public class PythonModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void  plot3D ( Promise promise) {
-        PyObject pyScript  = py.getModule("plotGraph");
-        PyObject obj = pyScript.callAttr("main");
+    public void  plot3D (String script, Promise promise) {
+        PyObject pyScripts  = py.getModule(script);
+        PyObject obj = pyScripts.callAttr("main");
         String str = obj.toString();
         byte data[] = android.util.Base64.decode(str, Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(data,0,data.length); //convert to  bitmap
        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-         Toast.makeText(getReactApplicationContext(),"Processing... Matplotlib to be Bitmap and wait for the plot " + bmp,Toast.LENGTH_SHORT).show();
+         Toast.makeText(getReactApplicationContext(),"Processing... " + bmp,Toast.LENGTH_SHORT).show();
         String loc = returnFile(bmp,"math"+ timestamp.getTime());
-        
-        
+
         try {
             promise.resolve(loc);
         } catch(Exception e) {
@@ -208,6 +207,8 @@ public class PythonModule extends ReactContextBaseJavaModule {
         }
 
     }
+
+    
 
 
 
@@ -225,7 +226,7 @@ public class PythonModule extends ReactContextBaseJavaModule {
         //        SET IMAGE AFTER THAT
         Log.d(TAG, "generateMathplotlib: "+bmp);
          Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-         Toast.makeText(getReactApplicationContext(),"Processing... Matplotlib to be Bitmap and wait for the plot " + bmp,Toast.LENGTH_SHORT).show();
+         Toast.makeText(getReactApplicationContext(),"Processing...  " + bmp,Toast.LENGTH_SHORT).show();
         String loc = returnFile(bmp,"math"+ timestamp.getTime());
         
         

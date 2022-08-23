@@ -9,6 +9,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
+import com.research.UI.ButtonAnimationPackage;
+import com.research.UI.SwitchPackage;
 import com.research.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
             packages.add(new ConverterPackage());
             packages.add(new PythonPackage());
+            packages.add(new ButtonAnimationPackage());
+            packages.add(new SwitchPackage());
           return packages;
         }
 

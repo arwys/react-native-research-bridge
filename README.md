@@ -8,7 +8,9 @@ probably you wont get local.properties  so you can create by copy from your anot
 if you get unlicensed chaquopy .... , it because because it used restricted version ,you can copy ``chaquopy.license=free`` in local.properties to run fully chaquopy
 but it download all python package and make this project bigger , so if you just want to test this library ,no need to install fully chaquopy
 
+
 Content
+
 
 1. Bridge Native Module 
 2. Bridge Native Module (Sending Property to Java Native)
